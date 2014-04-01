@@ -55,7 +55,7 @@
     var uiPlay = $("#gamePlay");
     var uiReset = $(".gameReset");
     var uiRemaning = $("#gameRemaning");
-    var uiScore = $(".gameScore")
+    var uiScore = $(".gameScore");
 
 
 
