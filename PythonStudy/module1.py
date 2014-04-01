@@ -8,5 +8,5 @@ while begin<end:
     p.stdin.close() 
     p.wait()  
     p.stdout.read()
-print("hello word!");
+
 
