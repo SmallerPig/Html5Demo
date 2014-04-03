@@ -5,13 +5,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5315f4f4-eaa9-4429-bcd5-6b971f94679c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>PythonStudy.py</StartupFile>
+    <StartupFile>wxwidgetsDemo.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PythonStudy</Name>
     <RootNamespace>PythonStudy</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,8 +23,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="App\models.py" />
+    <Compile Include="App\tests.py" />
+    <Compile Include="App\views.py" />
+    <Compile Include="App\__init__.py" />
     <Compile Include="module1.py" />
+    <Compile Include="NetWork.py" />
     <Compile Include="PythonStudy.py" />
+    <Compile Include="RegulaStudy.py" />
+    <Compile Include="wxwidgetsDemo.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\" />
+    <Folder Include="App\templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App\templates\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
