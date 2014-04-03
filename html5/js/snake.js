@@ -14,20 +14,17 @@
     });
 
     beginButton.click(function () {
-        timer = setInterval(function () {
+        timer = setInterval(function() {
             snake.move();
             paintSnake();
 
-        }, 500);
+        }, 100);
     });
 
     var timer;
 
-    var score;
-
-
     var snake = {
-        long : 5,
+        long : 20,
         direction :"right",
         head: {x:0,y:0},
         location: new Array(),//位置，是个数组
@@ -62,7 +59,7 @@
             snake.move();
             paintSnake();
 
-        }, 2000);
+        }, 100);
     }
 
     function paintSnake() {
@@ -72,12 +69,11 @@
                 //console.log(item.x + ":"+item.y);
                 context.strokeStyle = "red";
                 context.beginPath();
-                console.log((snake.location[index + 1].x+":"+ snake.location[index + 1].y));
-                //context.arc(100, 100, 99, 0, 2 * Math.PI, false);
-
-
+                //context.lineWidth = 5;
+                context.moveTo(snake.location[index].x, snake.location[index].y);
                 context.lineTo(snake.location[index + 1].x, snake.location[index + 1].y);
-               
+                //context.lineTo(300, 150);
+                context.stroke();
                 context.closePath();
             }
         });
