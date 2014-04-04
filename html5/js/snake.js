@@ -1,4 +1,10 @@
-﻿$(document).ready(function() {
+﻿/*
+author:smallerpig
+create:2014.04.03
+*/
+
+
+$(document).ready(function () {
     var canvas = $("#myCanvas");
     var context = canvas.get(0).getContext("2d");
     context.fillStyle = "#0000ff";
@@ -7,18 +13,41 @@
     var canvasWidth = canvas.width();
     var canvasHeight = canvas.height();
 
+    $(window).resize(resizeCanvas);
+
+    function resizeCanvas() {
+        canvas.attr("width", $(window).get(0).innerWidth);
+        canvas.attr("height", $(window).get(0).innerHeight);
+        canvasWidth = canvas.width();
+        canvasHeight = canvas.height();
+    };
+
+    resizeCanvas();
+
+    var food = newFood();
+
+    function newFood() {
+        return { x: Math.floor(Math.random() * canvasWidth), y: Math.floor(Math.random() * canvasHeight) };
+    }
+
+    console.log("food:" + food.x + "-------" + food.y);
+
     var stopButton = $("#stop");
     var beginButton = $("#begin");
     stopButton.click(function() {
         clearInterval(timer);
+        snake.isplay = false;
     });
 
     beginButton.click(function () {
-        timer = setInterval(function() {
-            snake.move();
-            paintSnake();
+        if (!snake.isplay) {
+            snake.isplay = true;
+            timer = setInterval(function () {
+                snake.move();
+                paintSnake();
+            }, 100);            
+        }
 
-        }, 100);
     });
 
     var timer;
@@ -28,12 +57,10 @@
         direction :"right",
         head: {x:0,y:0},
         location: new Array(),//位置，是个数组
-        //var isplay;
+        isplay:false,
 
 
         move: function () {
-            console.log(this.head);
-
             this.location.push({
                 x:this.head.x,y:this.head.y
             });
@@ -47,38 +74,61 @@
             } else if (this.direction === "bottom") {
                 this.head.y += 1;
             }
+
+            var Distance =Math.sqrt((this.head.x - food.x) * (this.head.x - food.x) + (this.head.y - food.y) * (this.head.y - food.y)) ;
+            console.log("distance:" + Distance);
+            if (Distance<5) {
+                food = newFood();
+                this.long += 5;
+            }
+            
+
             if (this.location.length > this.long+1)
                 this.location.shift();
 
-            console.log(this.location);
         }
 
     };
     function startGame() {
-        timer = setInterval(function() {
+        timer = setInterval(function () {
+            snake.isplay = true;
             snake.move();
-            paintSnake();
-
+            paintSnakeAndFood();
+            paintFood();
         }, 100);
     }
 
-    function paintSnake() {
+    function paintSnakeAndFood() {
         context.clearRect(0, 0, canvasWidth, canvasHeight);
+
         snake.location.forEach(function(item,index) {
             if (index < snake.location.length-1) {
                 //console.log(item.x + ":"+item.y);
+                context.lineWidth = 3;
                 context.strokeStyle = "red";
                 context.beginPath();
-                //context.lineWidth = 5;
                 context.moveTo(snake.location[index].x, snake.location[index].y);
                 context.lineTo(snake.location[index + 1].x, snake.location[index + 1].y);
-                //context.lineTo(300, 150);
                 context.stroke();
-                context.closePath();
             }
         });
+        context.beginPath();
+        context.lineWidth = 5;
+
+        context.strokeStyle = "green";
+        context.arc(food.x, food.y, 5, 0, 2 * Math.PI, false);
+        context.stroke();
+
     }
-//
+
+    function paintFood() {
+        //context.strokeStyle = "green";
+        ////context.moveTo(food.x, food.y);
+        //context.arc(food.x, food.y, 5, 0, 2 * Math.PI, false);
+        //context.stroke();
+    }
+
+    
 //    $(window).KEYDOWN(function(e) {
 //        
 //    });

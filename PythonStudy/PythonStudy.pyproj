@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5315f4f4-eaa9-4429-bcd5-6b971f94679c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>wxwidgetsDemo.py</StartupFile>
+    <StartupFile>NetWork.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

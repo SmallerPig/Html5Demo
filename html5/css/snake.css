@@ -1,0 +1,13 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+body {
+}
+canvas { display:block;        }
+
+#myButton {
+    position: fixed;
+    left: 5px;
+    bottom: 5px
+}

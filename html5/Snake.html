@@ -3,16 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>贪吃蛇</title>
+    <link href="css/snake.css" rel="stylesheet" />
 </head>
     <body>
-        <input type="button" id="stop" value="stop" />
-        <input type="button" id="begin" value="begin" /> 
-        <canvas width="800" height="600" id="myCanvas" style="border:1px solid #d3d3d3;">
+        <canvas id="myCanvas" >
             Your browser does not support the canvas element.
         </canvas>
-
-        <script type="text/javascript" src="Js/jquery-1.7.1.min.js"></script>
-        <script src="js/snake.js" type="text/javascript"></script>
-    </body>
+        <div id="myButton">
+            <input type="button" id="stop" value="stop" />
+            <input type="button" id="begin" value="begin" />
+        </div>
+            <script type="text/javascript" src="Js/jquery-1.7.1.min.js"></script>
+            <script src="js/snake.js" type="text/javascript"></script>
+</body>
 
 </html>
