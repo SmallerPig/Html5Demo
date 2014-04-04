@@ -24,10 +24,75 @@ $(document).ready(function () {
 
     resizeCanvas();
 
+    var v = 3;//速度
+    var snake = {
+        long: 20,//初始长度
+        direction: "right",//初始方向
+        head: { x: 0, y: 3 },//初始头的位置
+        location: new Array(),//位置，是个数组
+        isplay: false,
+        gameover:false,
+
+
+        move: function () {
+            if (!snake.gameover) {
+
+                this.location.forEach(function (item) {
+                    //console.log(item.x + snake.head.x + item.y + snake.head.y);
+                    var lx = Math.sqrt((item.x - snake.head.x) * (item.x - snake.head.x) + (item.y - snake.head.y) * (item.y - snake.head.y));
+                    if (lx < 2) {
+                        snake.gameover = true;
+                    }
+                });
+
+                this.location.push({
+                    x: this.head.x, y: this.head.y
+                });
+
+                if (this.direction === "left") {
+                    this.head.x -= v;
+                } else if (this.direction === "right") {
+                    this.head.x += v;
+                } else if (this.direction === "top") {
+                    this.head.y -= v;
+                } else if (this.direction === "bottom") {
+                    this.head.y += v;
+                }
+
+                var Distance = Math.sqrt((this.head.x - food.x) * (this.head.x - food.x) + (this.head.y - food.y) * (this.head.y - food.y));
+                if (Distance < 5) {
+                    food = newFood();
+                    this.long += 15;
+                }
+                if (this.location.length > this.long + 1)
+                    this.location.shift();                
+            } else {
+                clearInterval(timer);
+                console.log("gameover");
+            }
+        }
+
+    };
+
     var food = newFood();
 
     function newFood() {
-        return { x: Math.floor(Math.random() * canvasWidth), y: Math.floor(Math.random() * canvasHeight) };
+        var lx = Math.floor(Math.random() * canvasWidth);
+        var ly = Math.floor(Math.random() * canvasHeight);
+        var isContact = false;
+        snake.location.forEach(function (item) {
+            distance = Math.sqrt((item.x - lx) * (item.x - lx) + (item.y - ly) * (item.y - ly));
+            if (distance<5) {
+                isContact = true;
+                console.log("conttacting");
+            }
+        });
+        if (!isContact) {
+            return { x: lx, y: ly };
+        } else {
+            console.log("because new food cotact,so creat new");
+            return newFood();
+        }
     }
 
     console.log("food:" + food.x + "-------" + food.y);
@@ -44,7 +109,6 @@ $(document).ready(function () {
             snake.isplay = true;
             timer = setInterval(function () {
                 snake.move();
-                paintSnake();
             }, 100);            
         }
 
@@ -52,49 +116,12 @@ $(document).ready(function () {
 
     var timer;
 
-    var snake = {
-        long : 20,
-        direction :"right",
-        head: {x:0,y:0},
-        location: new Array(),//位置，是个数组
-        isplay:false,
 
-
-        move: function () {
-            this.location.push({
-                x:this.head.x,y:this.head.y
-            });
-
-            if (this.direction === "left") {
-                this.head.x -= 1;
-            } else if (this.direction === "right") {
-                this.head.x += 1;
-            } else if (this.direction === "top") {
-                this.head.y -= 1;
-            } else if (this.direction === "bottom") {
-                this.head.y += 1;
-            }
-
-            var Distance =Math.sqrt((this.head.x - food.x) * (this.head.x - food.x) + (this.head.y - food.y) * (this.head.y - food.y)) ;
-            console.log("distance:" + Distance);
-            if (Distance<5) {
-                food = newFood();
-                this.long += 5;
-            }
-            
-
-            if (this.location.length > this.long+1)
-                this.location.shift();
-
-        }
-
-    };
     function startGame() {
         timer = setInterval(function () {
             snake.isplay = true;
             snake.move();
             paintSnakeAndFood();
-            paintFood();
         }, 100);
     }
 
@@ -116,22 +143,11 @@ $(document).ready(function () {
         context.lineWidth = 5;
 
         context.strokeStyle = "green";
-        context.arc(food.x, food.y, 5, 0, 2 * Math.PI, false);
+        context.arc(food.x, food.y, 3, 0, 2 * Math.PI, false);
         context.stroke();
 
     }
 
-    function paintFood() {
-        //context.strokeStyle = "green";
-        ////context.moveTo(food.x, food.y);
-        //context.arc(food.x, food.y, 5, 0, 2 * Math.PI, false);
-        //context.stroke();
-    }
-
-    
-//    $(window).KEYDOWN(function(e) {
-//        
-//    });
 
     document.onkeydown = function() {
         console.log(event.keyCode);
